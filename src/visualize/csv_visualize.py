@@ -8,10 +8,6 @@ import matplotlib.pyplot as plt
 from constants import VIZ_ROOT, NUNIQUE_THRESHOLD
 
 class CSVVisualize:
-<<<<<<< HEAD
-
-=======
->>>>>>> Modify box_plot, pie_chart and correlation_map
     def __init__(self, input, target_col = None, index_column = None, exclude_columns = []):
         if type(input)==str:
             self.df = pd.read_csv(input, index_col = index_column)
@@ -29,11 +25,7 @@ class CSVVisualize:
         self.numerical_column_list = list(self.get_filtered_dataframe(include_type=np.number))
         temp_col_list = [num_col for num_col in self.numerical_column_list if self.df[num_col].nunique() < NUNIQUE_THRESHOLD]
         self.continuous_column_list = [x for x in self.numerical_column_list if x not in temp_col_list]
-<<<<<<< HEAD
         self.non_continuous_col_list = self.categorical_column_list + temp_col_list
-=======
-        self.non_continous_col_list = self.categorical_column_list + temp_col_list
->>>>>>> Modify box_plot, pie_chart and correlation_map
     
     def save_or_show(self, plot, plot_type, file_name, save=True, show=False):
         if save:
@@ -109,13 +101,8 @@ class CSVVisualize:
     def plot_scatter_plots(self,  save = True, show = False):
 
         df_new = self.get_filtered_dataframe()
-<<<<<<< HEAD
         col_pairs = self.get_correlated_numerical_columns(min_absolute_coeff=0.5)
         col_pairs.extend(self.get_categorical_numerical_columns_pairs())
-=======
-
-        col_pairs = self.get_correlated_columns(min_absolute_coeff=0.5)
->>>>>>> Modify box_plot, pie_chart and correlation_map
 
         for col_pair in col_pairs:
             y = col_pair[0]
@@ -131,19 +118,10 @@ class CSVVisualize:
 
     def plot_horizontal_box_plot(self, save = True, show = False):
         new_df = self.df
-<<<<<<< HEAD
         cat_cols = self.non_continuous_col_list
         num_cols = self.numerical_column_list
         cont_cols = self.continuous_column_list
         for x_col in cont_cols:
-=======
-        cat_cols = self.categorical_column_list
-        num_cols = self.numerical_column_list
-        y = [num_col for num_col in num_cols if new_df[num_col].nunique() < NUNIQUE_THRESHOLD]
-        cat_cols = cat_cols + y
-        number_cols = [x for x in num_cols if x not in y]
-        for x_col in number_cols:
->>>>>>> Modify box_plot, pie_chart and correlation_map
             sns_plot_1 = sns.boxplot(x = x_col, data = self.df)
             self.save_or_show(sns_plot_1.figure, 'box_plot', str(x_col), save=save, show=show)
             for y_col in cat_cols:
@@ -171,16 +149,8 @@ class CSVVisualize:
                 print('Cannot plot regression marginal plot for column pair',col_pair, e)
 
     def plot_scatter_plot_with_categorical(self, save = True, show = False):
-<<<<<<< HEAD
         cat_cols = self.non_continuous_col_list
         num_cols = self.continuous_column_list
-=======
-        cat_cols = self.categorical_column_list
-        num_cols = self.numerical_column_list
-        y = [num_col for num_col in num_cols if self.df[num_col].nunique() < NUNIQUE_THRESHOLD]
-        cat_cols = cat_cols + y
-        num_cols = [x for x in num_cols if x not in y]
->>>>>>> Modify box_plot, pie_chart and correlation_map
         for cat_col in cat_cols:
             for num_col in num_cols:
                 sns_plot = sns.swarmplot(x=cat_col, y=num_col, data=self.df)
@@ -210,11 +180,7 @@ class CSVVisualize:
             print('Target column is not categorical')
 
     def plot_pie_chart(self,x = None, y = None, save = True, show = False, threshold = 10):
-<<<<<<< HEAD
         df_new = self.df[self.non_continuous_col_list]
-=======
-        df_new = self.df[self.non_continous_col_list]
->>>>>>> Modify box_plot, pie_chart and correlation_map
         for col in df_new.columns:
             try:
                 val_series = df_new[col].value_counts()
